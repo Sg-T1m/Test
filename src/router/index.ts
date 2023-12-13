@@ -1,25 +1,44 @@
-import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
-
+import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
+import CatalogPage from "../views/CatalogPage.vue";
+import MainPage from "../views/MainPage.vue";
+import ProfilePage from "../views/ProfilPage.vue";
+import auth from "./middleware/auth";
+import store from "@/store";
+import middlewarePipeline from "./middlewarePipeline";
 const routes: Array<RouteRecordRaw> = [
+  { path: "/", component: MainPage },
+  { path: "/Catalog", name: "Catalog", component: CatalogPage },
   {
-    path: '/',
-    name: 'home',
-    component: HomeView
+    path: "/Profile",
+    name: "Profile",
+    component: ProfilePage,
+    meta: {
+      middleware: [auth],
+    },
   },
-  {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
-  }
-]
+];
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
-  routes
-})
+  routes,
+});
+router.beforeEach((to, from, next) => {
+  if (!to.meta.middleware) {
+    return next();
+  }
+  const middleware: any = to.meta.middleware;
 
-export default router
+  const context = {
+    to,
+    from,
+    next,
+    store,
+  };
+
+  return middleware[0]({
+    ...context,
+    next: middlewarePipeline(context, middleware, 1),
+  });
+});
+
+export default router;
