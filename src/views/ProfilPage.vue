@@ -11,7 +11,9 @@
                 <div>
                     <PersonalDataProfilePage v-model:personalData="personalData" />
                 </div>
-
+                <div class="btnChangeData">
+                    <btnGrey @click="changeDataUserProfle">Изменить данные</btnGrey>
+                </div>
                 <div>
                     <ChangePasswordProfilePage />
                 </div>
@@ -29,7 +31,7 @@ import PersonalDataProfilePage from '@/components/componentsProfilePage/Personal
 import HeaderText from '@/components/UI/HeaderText.vue';
 import ChangePasswordProfilePage from '@/components/componentsProfilePage/ChangePasswordProfilePage.vue';
 import { onBeforeMount, ref } from 'vue';
-import { GetReqest } from '@/utils/requestServices/RequestServices';
+import { GetReqest , ChangeDataUser} from '@/utils/requestServices/RequestServices';
 import store from '@/store';
 import btnGrey from '@/components/UI/btnGrey.vue';
 const personalData = ref<PersonalDataUser>(
@@ -71,6 +73,11 @@ function logout() {
     store.commit("SetRoleUser", "guest");
     localStorage.setItem('token', '')
     router.push('/')
+}
+function changeDataUserProfle() {
+    let token: string = localStorage.getItem("token")!
+     ChangeDataUser(`https://localhost:7217/api/DataUsers/${personalData.value.Id}`,token, personalData.value)
+    
 }
 </script>
 <style lang="scss" scoped>

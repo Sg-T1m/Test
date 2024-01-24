@@ -52,3 +52,24 @@ export const GetReqestNoAutg = async (url: string) => {
     return response;
   }
 };
+export async function ChangeDataUser(
+  url: string,
+  options: string,
+  data: any
+){
+  var axios = require("axios");
+  var config = {
+    method: `Put`,
+    url: url,
+    headers: {
+      Authorization: `Bearer ${options}`,
+    },
+    data: data,
+  };
+  try {
+    const response = await axios(config);
+    console.log(response.status);
+  } catch (err: any) {
+    console.log(err.status);
+  }
+}

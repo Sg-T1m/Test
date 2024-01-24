@@ -1,5 +1,5 @@
 <template>
-    <p>Страница каталога</p>
+    <p>Страница каталогаss</p>
 </template>
 <script lang="ts" setup>
 

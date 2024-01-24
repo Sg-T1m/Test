@@ -33,7 +33,7 @@
                 <div class="personalDataProfilePageInputs">
                     <TextRegistrationAndLogin>улица</TextRegistrationAndLogin>
                     <InputMore />
-                </div>
+                </div>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
                 <div class="personalDataProfilePageInputs">
                     <TextRegistrationAndLogin>дом</TextRegistrationAndLogin>
                     <InputMore />
@@ -44,7 +44,7 @@
                 </div>
             </div>
         </div>
-      
+
     </div>
 </template>
 <script lang="ts" setup>
